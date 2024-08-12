@@ -22,7 +22,8 @@ public class CompanyEntity {
     @JsonIgnore
     private List<JobEntity> entityList;
 
-//    @OneToMany
-//    private List<ReviewEntity> reviewEntityList;
+    @OneToMany
+    @JsonIgnore
+    private List<ReviewEntity> reviewEntity;
 
 }
