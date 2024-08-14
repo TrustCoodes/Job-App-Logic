@@ -21,9 +21,8 @@ public class CompanyEntity {
     @OneToMany(mappedBy = "companyEntity")
     @JsonIgnore
     private List<JobEntity> entityList;
-
-    @OneToMany
-    @JsonIgnore
+    
+    @OneToMany(mappedBy = "companyEntity", fetch = FetchType.EAGER)
     private List<ReviewEntity> reviewEntity;
 
 }

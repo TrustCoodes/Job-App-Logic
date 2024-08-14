@@ -1,5 +1,7 @@
 package com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Service.ReviewImpl;
 
+import com.trustcoodes.jobAppSimpleLogic.CompaniesLayer.Entity.CompanyEntity;
+import com.trustcoodes.jobAppSimpleLogic.CompaniesLayer.Service.CompanyService;
 import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Entity.ReviewEntity;
 import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Repository.ReviewRepo;
 import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Service.ReviewService;
@@ -17,6 +19,9 @@ public class ImplReview implements ReviewService {
     @Autowired
     private ReviewRepo reviewRepo;
 
+    @Autowired
+    CompanyService companyService;
+
     @Override
     public List<ReviewEntity> findAllReview(Long id) {
         return reviewRepo.findByCompanyEntity_Id(id);
@@ -29,8 +34,15 @@ public class ImplReview implements ReviewService {
     }
 
     @Override
-    public void addReview(ReviewEntity reviewEntity) {
-        reviewRepo.save(reviewEntity);
+    public boolean addReview(Long id, ReviewEntity reviewEntity) {
+        CompanyEntity companyEntity = companyService.findCompanyById(id);
+
+        if (companyEntity !=null){
+            reviewEntity.setCompanyEntity(companyEntity);
+            reviewRepo.save(reviewEntity);
+            return true;
+        }
+        return false;
     }
 
     @Override

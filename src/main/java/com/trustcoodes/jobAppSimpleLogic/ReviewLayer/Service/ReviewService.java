@@ -13,7 +13,7 @@ public interface ReviewService {
 
     Optional<ReviewEntity> findReviewById(Long id);
 
-    void addReview(ReviewEntity reviewEntity);
+    boolean addReview(Long id, ReviewEntity reviewEntity);
 
     boolean removeReviewById(Long id);
 
