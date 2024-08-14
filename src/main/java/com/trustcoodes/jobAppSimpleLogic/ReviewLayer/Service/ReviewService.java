@@ -11,7 +11,7 @@ public interface ReviewService {
 
     List<ReviewEntity> findAllReview(Long id);
 
-    Optional<ReviewEntity> findReviewById(Long id);
+    ReviewEntity findReviewById(Long id, Long reviewEntityId);
 
     boolean addReview(Long id, ReviewEntity reviewEntity);
 

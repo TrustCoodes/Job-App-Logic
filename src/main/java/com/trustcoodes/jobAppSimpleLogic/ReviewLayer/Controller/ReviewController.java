@@ -32,4 +32,11 @@ public class ReviewController {
             return new ResponseEntity<>("Review Not Added To ID attached", HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/review/{reviewEntityId}")
+    public ResponseEntity<ReviewEntity> findReviewById(@PathVariable Long reviewEntityId,
+                                                             @PathVariable Long id){
+        return new ResponseEntity<>(reviewService
+                .findReviewById(reviewEntityId, id), HttpStatus.OK);
+    }
 }

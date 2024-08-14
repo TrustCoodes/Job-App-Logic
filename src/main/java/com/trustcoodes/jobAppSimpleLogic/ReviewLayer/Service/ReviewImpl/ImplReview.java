@@ -2,6 +2,7 @@ package com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Service.ReviewImpl;
 
 import com.trustcoodes.jobAppSimpleLogic.CompaniesLayer.Entity.CompanyEntity;
 import com.trustcoodes.jobAppSimpleLogic.CompaniesLayer.Service.CompanyService;
+import com.trustcoodes.jobAppSimpleLogic.Exceptions.ReviewNotFoundException;
 import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Entity.ReviewEntity;
 import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Repository.ReviewRepo;
 import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Service.ReviewService;
@@ -28,9 +29,13 @@ public class ImplReview implements ReviewService {
     }
 
     @Override
-    public Optional<ReviewEntity> findReviewById(Long id) {
+    public ReviewEntity findReviewById(Long id, Long reviewEntityId) {
+        List<ReviewEntity> reviewEntities = findAllReview(id);
 
-        return reviewRepo.findById(id);
+        return reviewEntities.stream().filter(reviewEntity -> reviewEntity
+                .getId().equals(reviewEntityId)).findFirst()
+                .orElseThrow(() -> new ReviewNotFoundException("Review Not Found for This ID"
+                        + reviewEntityId));
     }
 
     @Override
