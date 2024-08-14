@@ -8,7 +8,8 @@ import java.util.Optional;
 
 @Component
 public interface ReviewService {
-    List<ReviewEntity> findAllReview();
+
+    List<ReviewEntity> findAllReview(Long id);
 
     Optional<ReviewEntity> findReviewById(Long id);
 

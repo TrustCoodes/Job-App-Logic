@@ -12,14 +12,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewImple implements ReviewService {
+public class ImplReview implements ReviewService {
 
     @Autowired
     private ReviewRepo reviewRepo;
 
     @Override
-    public List<ReviewEntity> findAllReview() {
-        return reviewRepo.findAll();
+    public List<ReviewEntity> findAllReview(Long id) {
+        return reviewRepo.findByCompanyEntity_Id(id);
     }
 
     @Override
