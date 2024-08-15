@@ -36,7 +36,34 @@ public class ReviewController {
     @GetMapping("/review/{reviewEntityId}")
     public ResponseEntity<ReviewEntity> findReviewById(@PathVariable Long reviewEntityId,
                                                              @PathVariable Long id){
+
         return new ResponseEntity<>(reviewService
                 .findReviewById(reviewEntityId, id), HttpStatus.OK);
+    }
+
+    @PutMapping("/review/{reviewEntityId}")
+    public ResponseEntity<String> updateReviewId(@RequestBody ReviewEntity reviewEntity,
+                                                 @PathVariable Long reviewEntityId,
+                                                 @PathVariable Long id){
+
+        boolean checkingReviewUpdate = reviewService.updateReviewById(reviewEntity, reviewEntityId, id);
+        if (checkingReviewUpdate){
+            return new ResponseEntity<>("Review Fetched and Updated, Thanks", HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>("ERROR: Review NOT Updated, Not Found on DB", HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    @DeleteMapping("/review/{reviewEntityId}")
+    public ResponseEntity<String> deleteByReviewId(@PathVariable Long id,
+                                                   @PathVariable Long reviewEntityId){
+
+        boolean reviewRemoved = reviewService.removeReviewById(id, reviewEntityId);
+        if (reviewRemoved){
+            return new ResponseEntity<>("Review Deleted Successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Info Not Found on Database",HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Service.ReviewImpl;
 
 import com.trustcoodes.jobAppSimpleLogic.CompaniesLayer.Entity.CompanyEntity;
 import com.trustcoodes.jobAppSimpleLogic.CompaniesLayer.Service.CompanyService;
+import com.trustcoodes.jobAppSimpleLogic.Exceptions.ResourceNotFoundException;
 import com.trustcoodes.jobAppSimpleLogic.Exceptions.ReviewNotFoundException;
 import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Entity.ReviewEntity;
 import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Repository.ReviewRepo;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -51,23 +52,28 @@ public class ImplReview implements ReviewService {
     }
 
     @Override
-    public boolean removeReviewById(Long id) {
-        if (reviewRepo.existsById(id)) {
-            reviewRepo.deleteById(id);
+    public boolean removeReviewById(Long id, Long reviewEntityId) {
+        if (companyService.findCompanyById(id) !=null && reviewRepo.existsById(reviewEntityId)) {
+
+            ReviewEntity entity = reviewRepo.findById(reviewEntityId)
+                    .orElseThrow(() -> new ResourceNotFoundException("No Review Found For This Protocol"));
+
+            CompanyEntity companyEntity = entity.getCompanyEntity();
+            companyEntity.getReviewEntity().remove(entity);
+            companyService.updateCompanyById(id, companyEntity);
+
+            reviewRepo.deleteById(reviewEntityId);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean updateReviewById(Long id, ReviewEntity reviewEntity) {
-        Optional<ReviewEntity> reviewEntities = reviewRepo.findById(id);
-        if (reviewEntities.isPresent()){
-            ReviewEntity review = reviewEntities.get();
-            review.setHeading(review.getHeading());
-            review.setInfo(review.getInfo());
-            review.setReviewRating(review.getReviewRating());
-            reviewRepo.save(review);
+    public boolean updateReviewById(ReviewEntity reviewEntity, Long id, Long reviewEntityId) {
+        if (companyService.findCompanyById(id) != null){
+            reviewEntity.setCompanyEntity(companyService.findCompanyById(id));
+            reviewEntity.setId(reviewEntityId);
+            reviewRepo.save(reviewEntity);
             return true;
         }
         return false;

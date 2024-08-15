@@ -4,7 +4,7 @@ import com.trustcoodes.jobAppSimpleLogic.ReviewLayer.Entity.ReviewEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Component
 public interface ReviewService {
@@ -15,7 +15,7 @@ public interface ReviewService {
 
     boolean addReview(Long id, ReviewEntity reviewEntity);
 
-    boolean removeReviewById(Long id);
+    boolean removeReviewById(Long id, Long reviewEntityId);
 
-    boolean updateReviewById(Long id, ReviewEntity reviewEntity);
+    boolean updateReviewById(ReviewEntity reviewEntity, Long id, Long reviewEntityId);
 }

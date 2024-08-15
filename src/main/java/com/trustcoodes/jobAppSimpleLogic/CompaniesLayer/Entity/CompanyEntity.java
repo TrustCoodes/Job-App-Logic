@@ -23,6 +23,7 @@ public class CompanyEntity {
     private List<JobEntity> entityList;
 
     @OneToMany(mappedBy = "companyEntity", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<ReviewEntity> reviewEntity;
 
 }
