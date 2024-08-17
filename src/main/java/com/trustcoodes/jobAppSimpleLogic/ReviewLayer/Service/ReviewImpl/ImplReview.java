@@ -56,10 +56,11 @@ public class ImplReview implements ReviewService {
         if (companyService.findCompanyById(id) !=null && reviewRepo.existsById(reviewEntityId)) {
 
             ReviewEntity entity = reviewRepo.findById(reviewEntityId)
-                    .orElseThrow(() -> new ResourceNotFoundException("No Review Found For This Protocol"));
+                    .orElseThrow(() -> new ResourceNotFoundException("No Review Found For This Request"));
 
             CompanyEntity companyEntity = entity.getCompanyEntity();
             companyEntity.getReviewEntity().remove(entity);
+            entity.setCompanyEntity(null);
             companyService.updateCompanyById(id, companyEntity);
 
             reviewRepo.deleteById(reviewEntityId);
