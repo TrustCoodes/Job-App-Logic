@@ -1,6 +1,6 @@
 package com.trustcoodes.jobAppSimpleLogic.JobLayer.Entity;
 
-import com.trustcoodes.jobAppSimpleLogic.CompaniesLayer.Entity.CompanyEntity;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,8 +17,6 @@ public class JobEntity {
     private String officeLocation;
     private String minSalary;
     private String maxSalary;
-
-    @ManyToOne
-    private CompanyEntity companyEntity;
+    private Long companyEntity;
 
 }

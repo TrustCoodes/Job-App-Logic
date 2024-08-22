@@ -1,6 +1,5 @@
 package com.trustcoodes.jobAppSimpleLogic.JobLayer.Controller;
 
-import com.trustcoodes.jobAppSimpleLogic.CompaniesLayer.Entity.CompanyEntity;
 import com.trustcoodes.jobAppSimpleLogic.JobLayer.Entity.JobEntity;
 import com.trustcoodes.jobAppSimpleLogic.JobLayer.Service.JobAppService;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +34,6 @@ public class JobAppController {
     @PostMapping()
     public ResponseEntity<String> addJob (@RequestBody JobEntity jobEntities){
         jobAppService.addJob(jobEntities);
-        CompanyEntity comp = jobEntities.getCompanyEntity();
-
         return new ResponseEntity<>("Job Published", HttpStatus.CREATED);
     }
 
